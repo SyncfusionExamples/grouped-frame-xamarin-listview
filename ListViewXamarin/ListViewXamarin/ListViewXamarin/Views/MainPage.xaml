@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ListViewXamarin"
+             xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             x:Class="ListViewXamarin.MainPage">
+    <ContentPage.BindingContext>
+        <local:ContactsViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <local:ThicknessConverter x:Key="converter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <local:Behavior/>
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <syncfusion:SfListView x:Name="listView" GroupHeaderSize="50" ItemSize="60" Margin="10" ItemsSource="{Binding contactsinfo}">
+            <syncfusion:SfListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid BackgroundColor="Gray">
+                        <Grid Padding="5,0,0,0" BackgroundColor="White" x:Name="grid" Margin="{Binding Converter={StaticResource converter}, ConverterParameter={x:Reference listView}}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding ContactImage}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="50"/>
+                            <Grid Grid.Column="1" Padding="10,0,0,0" VerticalOptions="Center">
+                                <Label LineBreakMode="WordWrap" TextColor="#474747" Text="{Binding ContactName}"/>
+                                <Label Grid.Row="1" Grid.Column="0" TextColor="#474747" Text="{Binding ContactNumber}"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </syncfusion:SfListView.ItemTemplate>
+
+            <syncfusion:SfListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Grid BackgroundColor="Gray" Margin="0,10,0,0">
+                        <Grid BackgroundColor="White" Margin="{Binding Converter={StaticResource converter}, ConverterParameter={x:Reference listView}}">
+                            <Grid Margin="5">
+                                <Frame Padding="5,0,0,0" HasShadow="False" OutlineColor="LightGray" BackgroundColor="AliceBlue">
+                                    <Label x:Name="label" Text="{Binding Key}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Start"/>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </syncfusion:SfListView.GroupHeaderTemplate>
+        </syncfusion:SfListView>
+    </ContentPage.Content>
+</ContentPage>
